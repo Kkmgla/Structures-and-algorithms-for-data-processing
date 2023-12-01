@@ -120,3 +120,35 @@ Balanced type search tree (STD): B-Tree
 Record structure: Company employees: number(key), full name, fact of higher education (bool)
 
 ## SIAOD6 (EN)
+Subject. Basic algorithms for working with graphs.
+Target. Obtaining practical skills in performing operations on graph data structures.
+Exercise.
+1. Develop a “Graph” class that provides storage and work with the “graph” data structure, in accordance with the individual task option. Implement a method for entering a graph from the keyboard, adding a node, adding an edge, outputting a graph, and methods that perform tasks defined by the individual task option.
+2. Develop a program that demonstrates the operation of all methods of the class.
+Representation of a graph in memory: Adjacency matrix
+Tasks:
+1. Print all the chains in the graph using the depth-first search method.
+2. Create a program for finding the shortest paths in a graph using the given method of “Constructing a decision tree.”
+3. Print the paths obtained by the method
+
+## SIAOD7 (EN)
+Subject. Encoding and compression of data using lossless methods.
+Target. Obtaining practical skills and knowledge to perform data compression using the methods in question.
+Exercise.
+1. Develop a program that demonstrates the execution of the following algorithms:
+	1.1. Text compression using the RLE method (run length encoding/run length encoding/group encoding). Calculate the compression ratio in tests.
+	1.2. Test on a long series of repeating characters.
+	1.3. Test on a long series of non-repeating characters.
+2. Text compression using the Lempel-Ziv algorithm (LZ77), LZ78.
+	2.1. Calculate the compression ratio in tests.
+	2.2. Test the implementation of LZ77 in accordance with the individual version of the task, using the two-character alphabet (0, 1). Describe in the report the process of recovering the resulting compressed text.
+	2.3. Test the implementation of LZ78 in accordance with the individual version of the task. Describe in the report the process of recovering the resulting compressed text.
+3. Text compression and recovery using Shannon-Fano and Huffman algorithms.
+	3.1. Test the Shannon-Fano method in accordance with the individual version of the task.
+  	3.2. Present the code generation table in the report, display the prefix tree, and calculate the compression ratio.
+	3.3. Test the Huffman method on a line containing your full name.
+   	3.4. Construct a table 	of symbol occurrence frequencies, form an alphabet of the source string, and calculate the frequency of occurrences and the probability of occurrence of symbols.
+   	3.5. Draw a prefix Huffman tree. Show the encoding of each character in a string.
+   	3.6. Calculate compression ratio, average code length and variance.
+	3.7. Apply the algorithm to a large text file. Archive the same file using any archiver.
+   	3.8. Perform a comparative analysis of compression using these methods.
