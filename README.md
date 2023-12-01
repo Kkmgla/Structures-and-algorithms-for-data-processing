@@ -104,3 +104,19 @@ Option Operations:
 2. Delete binary tree
 
 ## SIAOD5 (EN)
+Subject. Balanced search trees (BSTs) and their use for searching data in a file.
+Target:
+	gain skills in the development and implementation of algorithms for managing a binary search tree and balanced binary search trees (ABL trees);
+	gain skills in using file streams for direct access to file data;
+	Gain skills in using a balanced search tree to directly access file records.
+Exercise.
+1. Develop a file management class. Include methods: creating a binary file of fixed-length records from pre-prepared data in a text file; searching and displaying a record in a file using linear search; outputting a record to a known address in a file, adding a record to a file. The file record structure is determined by the individual job option.
+2. Develop the “Binary Search Tree” class. The structure of the information part of a tree node includes a key and a link to a record in the file. Develop basic methods: building a tree from an existing file; adding an element to the tree; search by key in the tree; removing an element from the tree; tree output in tree form.
+3. Develop a “Balanced Search Tree” class. The structure of the information part of a tree node includes a key and a link to a record in the file. Develop basic methods: building a tree from an existing file; adding an element to the tree; search by key in the tree; removing an element from the tree; tree output in tree form.
+4. Develop an application that demonstrates the execution of all methods and searching for records in a file using LDS, LDS and linear search.
+5. Analyze the execution time of searching for records located at the beginning, middle and end of a large file in three ways.
+6. Determine the average number of turns performed (number of turns per total number of keys inserted) when including keys in the PSD when it is generated from a binary file.
+Balanced type search tree (STD): B-Tree
+Record structure: Company employees: number(key), full name, fact of higher education (bool)
+
+## SIAOD6 (EN)
