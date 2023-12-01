@@ -149,6 +149,14 @@ Exercise.
 	3.7. Apply the algorithm to a large text file. Archive the same file using any archiver.
    	3.8. Perform a comparative analysis of compression using these methods.
 
+## SIAOD8 (EN)
+Subject. Algorithmic strategies or methods for developing algorithms. Overkill and methods for reducing it.
+Target. Gain skills in using methods to reduce the number of searches in problems that can only be solved by searching through all possible solution options.
+Exercise.
+1. Develop an algorithm for solving the problem using the method specified in the option and implement the program.
+2. Estimate the number of searches when solving a problem using a “head-on” strategy - brute force.
+3. Provide an analysis of reducing the number of searches when applying the method.
+
 ## SIAOD1 (RU)
 Тема. Поразрядные операции и их применение.
 Цель. Получение навыков применения поразрядных операций в алгоритмах.
@@ -298,3 +306,14 @@ Exercise.
 	3.6. Применить алгоритм к большому текстовому файлу.
 	3.7. Архивировать тот же файл любым архиватором.
 	3.8. Выполнить сравнительный анализ сжатия этими способами.
+
+## SIAOD8 (RU)
+Тема. Алгоритмические стратегии или методы разработки алгоритмов. Перебор и методы его сокращения.
+Цель. Получить навыки применения методов, позволяющих сократить число переборов в задачах, которые могут быть решены только методом перебора всех возможных вариантов решения.
+Задание.
+1. Разработать алгоритм решения задачи с применением метода, указанного в варианте и реализовать программу.
+2. Оценить количество переборов при решении задачи стратегией «в лоб» - грубой силы.
+3. Привести анализ снижения числа переборов при применении метода.
+Задача:
+Разработать процедуру оптимального способа расстановки скобок в произведении последовательности матриц, чтобы количество скалярных умножений стало максимальным.
+Метод: Жадный алгоритм
