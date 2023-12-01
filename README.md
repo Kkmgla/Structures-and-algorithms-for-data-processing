@@ -88,3 +88,19 @@ Hash table type (collision resolution method): Open address (offset by 1)
 Binary File Record Structure: Airport (the arrival board for passenger flights saves all data in a file): point of departure, flight number, date of arrival, time of arrival, information about arrival delay in hours.
 
 ## SIAOD4 (EN)
+Subject. Nonlinear data structures. Binary tree.
+Target. Obtaining skills in developing and implementing operations on the binary tree data structure.
+Exercise:
+Tree type: perfectly balanced with n nodes (not AVL).
+1. Implement operations common to options 1 to 7
+	1.2. Create a perfectly balanced binary tree of n nodes. The structure of a tree node includes: the information part of the node, a pointer to the left and a pointer to the right subtree. The information part of the node is determined by the variant.
+	1.3. Display the tree on the screen by rotating it counterclockwise on the screen.
+2. Implement variant operations.
+3. Develop a program that demonstrates the execution of all operations.
+4. Compile a report showing a description of the implementation of all stages of development, testing and the code of the entire program with screenshots of the testing results.
+Meaning of the information part: Real number
+Option Operations: 
+1. Calculate the arithmetic mean of the numbers of the left subtree, as well as the right one, separately.
+2. Delete binary tree
+
+## SIAOD5 (EN)
