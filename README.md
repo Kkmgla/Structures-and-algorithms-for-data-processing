@@ -34,7 +34,7 @@ Task1: Create a new file from the values of the original one, copying only prime
 
 Exercise 2.
 2. Develop a binary file management program with fixed-length records. General requirements: the file consists of records of a certain structure, according to the option. Records have a key that is unique within the file.
-2.1. Develop a binary file recording structure according to the assignment option.
+  2.1. Develop a binary file recording structure according to the assignment option.
   2.2. Prepare test data in a text file with ASCII encoding, in accordance with the structure of the variant record. When opening a file, check its existence and opening.
   2.3. The file name is entered by the user.
   2.4. When opening a file, provide control over the existence and opening of the file.
