@@ -1,0 +1,299 @@
+There are 12 steps in a EMV transaction
+
+At most there are 12 steps in an EMV transaction. But some of these are optional or conditional.
+
+The best way to understand EMV is to think of a transaction as a conversation between the card and the terminal.
+
+The terminal has two checklists. One is called the “Terminal Verification Results” or TVR. And the other one is called the “Transaction Status Information” or TSI.
+
+Both of these checklists start as arrays of bits set to 0. Depending on how the transaction progresses, some bits will be set to 1.
+
+During the conversation between the card and the terminal, the terminal will check off certain items on its TVR checklist in to make sure it doesn’t do something stupid like accept a fraudulent payment.
+
+At the same time the terminal will check off items on its TSI checklist to keep track of where the transaction is in the process.
+
+Application selection
+
+An EMV card may contain multiple (payment) applications. During the first step the card is powered up and an application is selected.
+
+Once an application is selected the card will respond with a Processing options Data Object List (PDOL). The PDOL is a list of data elements that the card needs to receive from the terminal in order to execute the next command in the transaction process.
+
+Initiate application
+
+During this step the terminal sets the Transaction Status Information (TSI) and Terminal Verification Results (TVR) bit arrays to all zeros.
+
+The TSI is a 2-byte bit array that records when a particular step or process has been executed.
+
+
+RFU is an abbreviation of "Reserved for Future Use".
+
+The TVR is a 5-byte bit array that records the results of risk checks. This bit array will be used to determine how to proceed with the transaction during the “terminal action analysis” step.
+
+Now the terminal needs to determine two things:
+
+Which EMV functionality does the card support?
+Where does it keep all the information needed to use the functionality?
+To answer this question the terminal issues the Get Processing Options (GPO) command. The card will respond with the Application Interchange Profile (AIP) and the Application File Locator (AFL).
+
+The AIP is a 2-byte bit array that indicates the types of functions supported by the card. And the AFL is essentially a ‘list’ of records the terminal should read from the card in order to use these functions.
+
+Read application data
+
+After the AFL is returned the terminal issues one or more Read Record commands. Each read record command requests one record from the card.
+
+Every entry on the AFL ‘list’ has 4 bytes. The first byte is the Short File Indicator (SFI). The SFI is a reference to a file on the card. Files have one or more records.
+
+The second and third bytes are the first and last record to read. Imagine an AFL entry: “0E 01 03 02”. This entry requires the terminal to request record 1, 2 and 3 from file 0E. (These numbers are in hexadecimal, a common notation in EMV)
+
+The fourth byte indicates which records will be included in the data authentication process. In our example: “0E 01 03 02”, this means that record 1 and 2 will be used.
+
+Data authentication
+
+The “data authentication” step does not have to be performed immediately after the “read application data” step. It only has to be performed between the “read application data” step and the “terminal action analysis” step.
+
+The AIP was retrieved during the “initiate application” step. The AIP indicates which type of Offline Data Authentication (ODA) the card supports.
+
+There are three types of ODA:
+
+Combined Dynamic Data Authentication (CDA)
+Dynamic Data Authentication (DDA)
+Static Data Authentication (SDA)
+The type of ODA performed depends on the types supported by both the card and the terminal.
+
+If both support CDA, CDA will be performed.
+If both support DDA and one or both do not support CDA; DDA is performed.
+If both support SDA and one or both not support CDA and DDA; SDA is performed.
+If both the card and terminal do not support any of the ODA types, the ‘Offline data authentication was not performed’ bit in the TVR is set to 1.
+
+During the “Read application data” step the AFL indicated which records would be used in ODA. The terminal, using one of the three types of ODA, authenticates this data.
+
+If authentication fails one of the following bits in the TVR is set to 1:
+
+CDA failed bit,
+DDA failed bit, or
+SDA failed bit
+Once ODA has been performed, the ‘Offline data authentication was performed’ bit in the TSI is set to 1.
+
+Processing restrictions
+
+Sometimes a card may be restricted for use in a specific country, or for a specific service. Or a card may be expired, or outdated.
+
+During the “processing restrictions” step the terminal checks three thing:
+
+Whether the application version on the card is the same as on the terminal
+Whether the type of transaction is allowed
+And whether the card is valid and not expired
+Application version number
+
+Both the card and the terminal have an application version number. This number is prescribed by the payment scheme (for example Visa).
+
+If the card does not have an application version number, the terminal assumes the numbers match
+If the numbers match the transaction continues as usual
+If the numbers do not match the ‘ICC and terminal have different application versions’ bit in the TVR is set to 1
+Application usage control
+
+During the “read application data” step the card will have received an Application Usage Control (AUC) record. This 2-byte bit array will tell the terminal whether the card:
+
+Is valid for domestic cash transaction
+Is valid for international cash transaction
+Is valid for domestic goods
+Is valid for international goods
+Is valid for domestic services
+Is valid for international services
+Is valid at ATMs
+Is valid at terminals other than ATMs
+Allows domestic cashback
+Allows international cashback
+The terminal checks whether the transaction it is processing is allowed by the AUC or not.
+
+If it is not allowed the ‘Requested service not allowed for card product’ bit in the TVR is set to 1.
+
+Application Effective/Expiration Dates Checking
+
+Sometimes a card is issued that is not valid yet at the moment of issuing. This can be set on the card in the Application Effective Date record.
+
+If the card has an Application Effective Date and it is after the current date, the ‘Application not yet effective’ bit in the TVR is set. Otherwise nothing is set.
+
+Applications will have an expiration date. The card gives the Application Expiration Date to the terminal during the “read application data” step. If this date is in the future, the transaction continues normally. Otherwise the ‘Expired Application’ bit in the TVR is set to 1.
+
+Cardholder verification
+
+EMV offers additional tools for the cardholder to prove that he or she is the rightful holder of the card. These tools are called Cardholder Verification Methods (CVMs)
+
+EMV includes:
+
+Online PIN
+Offline Enciphered PIN
+Offline Plaintext PIN
+Signature
+No-CVM
+Explaining how a CVM is selected and how each CVM method works is a question on its own. The most important take away here is that some manner of CVM is performed, and the results of the CVM processing will set a number of bits in the TVR and TSI.
+
+Depending on the results of the CVM processing the following bits may be set to 1 in the TVR:
+
+Cardholder verification was not successful
+Unrecognized CVM
+PIN Try Limit exceeded
+PIN entry required and PIN pad not present or not working
+PIN entry required, PIN pad present, but PIN was not entered
+Online PIN entered
+If the “cardholder verification” step was run, the “Cardholder verification was performed” bit in the TSI will be set to 1.
+
+Terminal risk management
+
+The goal of terminal risk management is to protect the payment system from fraud. The risk of fraud is smaller when the terminal requests online approval from the issuer for a transaction. To determine whether the transaction should go online, the terminal checks three things:
+
+If the transaction is above the offline floor limit
+Whether it wants to randomly select this transaction to go online
+Or if the card has not had an online authorization in a while
+Once this step has been performed the ‘Terminal risk management was performed’ bit in the TSI is set to 1.
+
+Floor limit checking
+
+If the value of the transaction is above the floor limit set in the terminal the “Transaction exceeds floor limit” bit in the TVR is set to 1.
+
+Random transaction selection
+
+A terminal may randomly select a transaction. If the transaction is selected the ‘Transaction selected randomly for online processing’ bit in the TVR will be set to 1.
+
+Velocity checking
+
+If a card has not been online in a while this may indicate fraudulent usage. In order to combat this, a card may have a Lower Consecutive Offline Limit (LCOL) and a Upper Consecutive Offline Limit (UCOL) set.
+
+If the LCOL and UCOL have been provided to the terminal, it must do velocity checking.
+
+The terminal will first request the Application Transaction Counter (ATC) and the Last Online ATC Register using the GET DATA command.
+
+The ATC is a counter that is incremented by 1 every time a transaction is performed. The Last Online ATC Register is set to the value of the ATC when a transaction has been online. The difference between them is the number of transactions that have been performed offline.
+
+If the difference is higher than the LCOL
+The ‘Lower consecutive limit exceeded’ bit in the TVR is set to 1
+If the difference is also higher than the UCOL
+The ‘Upper consecutive limit exceeded’ bit in the TVR is also set to 1
+If the Last Online ATC Register is 0
+The “New card” bit in the TVR will be set to 1
+Terminal action analysis
+
+Up until now several bits on the TVR have been set. This was done so the terminal can use the TVR to make a decision about which action to take.
+
+Whether to decline the transaction, complete it offline, or complete it online.
+
+This is only a preliminary decision. The terminal has to ask the card for confirmation of its decision. The card may change the decision during the “card action analysis” step.
+
+Both the terminal and the card have settings that determine the action to take based on the TVR.
+
+The settings on the card are called Issuer Action Codes (IAC). The settings on the terminal are called Terminal Action Codes (TAC).
+
+There are three IACs and three TACs:
+
+TAC/IAC Denial
+TAC/IAC Online
+TAC/IAC Default
+Just like the TVR these action codes are 5-byte bit arrays.
+
+Denial action codes
+
+The first step in “terminal action analysis” is to “add up” the TAC and IAC codes. For example:
+
+IAC: 00110011 00000000 00000000 00000000 00000000
+
+TAC: 01010101 00000000 00000000 00000000 00000000
+
+Result: 01110111 00000000 00000000 00000000 00000000
+
+This is called an OR operation.
+
+Let’s assume this the denial action code.
+
+The denial result is then compared with the TVR. If any bits match, the terminal will request to decline the transaction. For example:
+
+Result: 01110111 00000000 00000000 00000000 00000000
+
+TVR: 10010000 00000000 00000000 00000000 00000000
+
+As we can see in the example, a bit between the denial action codes and the TVR matches. This means the terminal will decline the transaction.
+
+If there is no match between the TVR and the denial action codes, the terminal will compare the Online action codes and the TVR.
+
+Online action codes
+
+If there is a match between the online action codes and the TVR the terminal will request to approve the transaction online.
+
+If there is no match between the online action codes and the TVR the terminal will request to approve the transaction offline.
+
+Default action codes
+
+If the terminal wants to approve the transaction online, but is unable to, the terminal will check the default action codes and TVR.
+
+If there is a match between the action codes and the TVR the terminal will request to decline the transaction.
+
+If there is no match, the terminal will request to approve the transaction offline.
+
+Generate Application Cryptogram
+
+Regardless of the decision taken by the terminal, it has to request confirmation from the card. And the card may disagree with the terminal.
+
+The terminal requests confirmation by using the GENERATE APPLICATION CRYPTOGRAM (generate AC) command. In this command it will request to either: decline, approve offline or approve online.
+
+Together with this request the terminal will provide the card with the required data for the “card action analysis” step.
+
+Card action analysis
+
+This step starts when the terminal issues its first GENERATE APPLICATION CRYPTOGRAM (generate AC) command to the card.
+
+During this step the card may perform its own risk management checks. How the card performs risk management is outside the scope of EMV. The card only has to communicate the results of its decision. This result is communicated using a cryptogram.
+
+The card will generate one of three possible cryptograms:
+
+Transaction approved: Transaction Certificate (TC)
+Request online approval: Authorization ReQuest Cryptogram (ARQC)
+Transaction declined: Application Authentication Cryptogram (AAC)
+At the end of this step the card provides a TC, ARQC or AAC to the terminal together with the transaction data used to generate the cryptogram. The terminal will set the “Card risk management was performed” bit in the TSI to 1.
+
+What’s a cryptogram?
+
+A cryptogram is cryptographic hash of some transaction related data. Only the card and the issuer know the keys used to generate the cryptogram.
+
+Why do we need a cryptogram?
+
+The cryptogram contains the card’s decision on what to do with the transaction: approve, request online approval, or decline. It cannot be faked.
+
+So the issuer uses the cryptogram and the data therein to confirm that the card is authentic and that the proper risk management has been performed.
+
+If the card generates a TC, the acquirer needs to provide the cryptogram to the Issuer in order to capture the funds of the transaction.
+
+Offline/Online decision
+
+If the terminal received an ARQC the terminal will request authorization from the issuer. If the terminal received a TC or AAC the transaction is now finished with an offline authorization or offline decline.
+
+Online processing & Issuer authentication
+
+The processing by the issuer is outside the scope of EMV. But it is expected that the issuer authenticates the card by validating the ARQC cryptogram.
+
+The issuer should perform its own risk management and check if the cardholder has sufficient credit or funds.
+
+The issuer will respond with either an approval or decline code. The issuer may also generate a response cryptogram using data known to the card. The card can use this data to verify that the response received is really from the issuer.
+
+The card will have told the terminal that it supports issuer authentication in the AIP. If a response cryptogram is received and the card supports issuer authentication the terminal will request authentication using the EXTERNAL AUTHENTICATE command. If the issuer authentication fails the “Issuer authentication failed” bit in the TVR will be set to 1.
+
+Once issuer authentication has been performed the “Issuer authentication was performed” bit in the TSI is set to 1.
+
+Issuer script processing
+
+In some cases the issuer may want to update some data on the card. This can be done using issuer script processing.
+
+In response to the authorization request the issuer may reply with issuer scripts to be executed on the card. These will be executed either right before or right after the second generate AC command. This will depend on settings in the issuer script.
+
+If issuer scripts were processed the terminal will set the “Script processing was performed” bit in the TSI to1.
+
+If issuer script processing fails:
+
+If the issuer script processing fails before the second generate AC command
+The “Script processing failed before final GENERATE AC” bit in TVR will be set to 1.
+If the issuer script processing fails after the second generate AC command
+The “Script processing failed after final GENERATE AC” bit in TVR will be set to 1.
+Completion
+
+If the transaction went online for approval and a response was received the terminal will request a final transaction cryptogram using the GENERATE AC command for a second time.
+
+In this case the card can only respond with a TC or AAC. The TC is required to capture the funds from the issuer.
