@@ -61,7 +61,7 @@ Exercise 1.
 2. Create an application and include three header files: hash table control, binary file control (lab 2), binary file control with hash table.
 3. To provide direct access to a record in a file, a hash table element must include the required fields: the key of the record in the file, the number of the record with this key in the file. The element may contain other fields required by the method (specified in your variant) that resolves the collision.
 4. Hash table management
-  	4.1. Determine the structure of the hash table element and the structure of the hash table according to the collision resolution method specified in the option. Place definitions in the appropriate header file. 				Place all hash table management operations in this header file.
+  	4.1. Determine the structure of the hash table element and the structure of the hash table according to the collision resolution method specified in the option. Place definitions in the appropriate header file. 		Place all hash table management operations in this header file.
   	4.2.Test operations in the main function of the application as they are implemented.
 	4.3. After testing all operations, create a function in the header file named testHeshT, move the contents of the main function into it, and check that the application is running.
 	4.4. Develop hash table management operations.
@@ -75,15 +75,16 @@ Exercise 1.
 		4.7.5. searching for a key in a table. For the public address method, prepare a test to find the key that is placed in the table after the deleted key, with one hash value for these keys
 	4.8. Perform testing of hash table management operations. When testing the operation of inserting a key into a table, provide a list of indexes that are formed when inserting elements into the table.
 5. Binary File Management
-	5.1. Binary file management operations: create a binary file from a text file, add an 		entry to a binary file, remove an entry with a given key from a file, read a file entry by 	a given entry number.
-	5.2. The record structure of a binary file and all file manipulation operations must be 	placed in an appropriate header file.
-	5.3. Test the operations in the main application, and move the contents of the main 		function to the corresponding function in the header file named testBinF.
+	5.1. Binary file management operations: create a binary file from a text file, add an entry to a binary file, remove an entry with a given key from a file, read a file entry by a given entry number.
+	5.2. The record structure of a binary file and all file manipulation operations must be placed in an appropriate header file.
+	5.3. Test the operations in the main application, and move the contents of the main function to the corresponding function in the header file named testBinF.
 6. Managing a file using a hash table
 7. Include header files into the file control header file using a hash table: hash table control, binary file control. Implement each of the following operations one by one in this header file, testing them from the main function of the application. After developing all operations, perform their comprehensive testing.
 8. Develop and implement operations
-	8.1. Read a record from a file and insert an element into the table (the element includes: 	the key and the number of the record with this key in the file, and additional fields are 	possible for the open addressing method).
+	8.1. Read a record from a file and insert an element into the table (the element includes: the key and the number of the record with this key in the file, and additional fields are possible for the open addressing method).
 	8.2. Delete a record from the table with a given key value and, accordingly, from the file.
-	8.3. Find a record in a file by key value (find a key in a hash table, get the number of 	the record with this key in the file, directly access the record by its number).
+	8.3. Find a record in a file by key value (find a key in a hash table, get the number of the record with this key in the file, directly access the record by its number).
+Hash table type (collision resolution method): Open address (offset by 1)
+Binary File Record Structure: Airport (the arrival board for passenger flights saves all data in a file): point of departure, flight number, date of arrival, time of arrival, information about arrival delay in hours.
 
-
-
+## SIAOD4 (EN)
