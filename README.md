@@ -22,12 +22,12 @@ Target. Gain skills in using C++ file streams (or C language files) to manage te
 Exercise 1.
 1. Develop a program to manage a text file.
   1.1. Implementation of I/O based on C++ file streams: ofstream, ifstream.
-  1.2. The name of the physical file is entered by the user and passed to the processing           functions via a parameter.
+  1.2. The name of the physical file is entered by the user and passed to the processing functions via a parameter.
   1.3. Develop functions to perform operations on a text file:
-    1.3.1. creating an ASCII text file containing decimal numbers, several numbers per line;       the; file can be a sample file or user-entered;
+    1.3.1. creating an ASCII text file containing decimal numbers, several numbers per line;
     1.3.2. output the contents of a text file;
     1.3.3. adding a new line to the end of the file;
-    1.3.4. read the value of a number, indicating its serial number in the file, and return        its value;
+    1.3.4. read the value of a number, indicating its serial number in the file, and return its value;
     1.3.5. determine the number of numbers in the file.
     1.3.6. implement additional operations defined by options
 Task1: Create a new file from the values of the original one, copying only prime numbers into it, placing each on a separate line of the text file.   
@@ -35,15 +35,15 @@ Task1: Create a new file from the values of the original one, copying only prime
 Exercise 2.
 2. Develop a binary file management program with fixed-length records. General requirements: the file consists of records of a certain structure, according to the option. Records have a key that is unique within the file.
   2.1. Develop a binary file recording structure according to the assignment option.
-  2.2. Prepare test data in a text file with ASCII encoding, in accordance with the structure    of the variant record. When opening a file, check its existence and opening.
+  2.2. Prepare test data in a text file with ASCII encoding, in accordance with the structure of the variant record. When opening a file, check its existence and opening.
   2.3. The file name is entered by the user.
   2.4. When opening a file, provide control over the existence and opening of the file.
-  2.5. When using the mechanism of direct access to a file record, check the presence of a       record with a given number in the file.
+  2.5. When using the mechanism of direct access to a file record, check the presence of a record with a given number in the file.
   2.6. Develop functions to perform operations:
     2.6.1. converting test data from a text file to a binary file;
     2.6.2. converting data from a binary file to a text file;
     2.6.3. output all entries of a binary file;
-    2.6.4 accessing a record by its serial number in the file, using the mechanism of direct       access to a record in a binary file;
+    2.6.4 accessing a record by its serial number in the file, using the mechanism of direct access to a record in a binary file;
     2.6.5. Delete a record with a given key value by replacing it with the last record.
-    2.6.6. manipulating entries in a binary file according to additional operations defined in     the variant;
+    2.6.6. manipulating entries in a binary file according to additional operations defined in the variant;
     
